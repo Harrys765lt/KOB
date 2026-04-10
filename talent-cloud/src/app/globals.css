@@ -1,0 +1,211 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@400;600&family=Playfair+Display:wght@500;700;800&display=swap");
+@import "tailwindcss";
+
+:root {
+  --bg-primary: #eef3f8;
+  --bg-card: #ffffff;
+  --text-primary: #0d1117;
+  --text-secondary: #6b7a8d;
+  --accent-blue: #3b82f6;
+  --accent-green: #22c55e;
+  --niche-beauty: #f9a8d4;
+  --niche-food: #fcd34d;
+  --niche-fashion: #a78bfa;
+  --niche-lifestyle: #6ee7b7;
+  --niche-tech: #93c5fd;
+  --niche-travel: #fdb894;
+  --border: #e2e8f0;
+  --shadow: 0 16px 40px rgba(13, 17, 23, 0.08);
+  --shadow-soft: 0 10px 24px rgba(13, 17, 23, 0.05);
+  --radius-card: 14px;
+}
+
+@theme inline {
+  --font-sans: "DM Sans";
+  --font-display: "Playfair Display";
+  --font-mono: "JetBrains Mono";
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: "DM Sans", sans-serif;
+  letter-spacing: 0.01em;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: "Playfair Display", serif;
+}
+
+.credential-font {
+  font-family: "JetBrains Mono", monospace;
+}
+
+.card-surface {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  border-radius: var(--radius-card);
+  transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
+}
+
+.meadow-bg {
+  background:
+    radial-gradient(980px 420px at 16% 10%, rgba(255, 255, 255, 0.56), transparent 70%),
+    radial-gradient(840px 360px at 84% 13%, rgba(255, 255, 255, 0.45), transparent 72%),
+    linear-gradient(180deg, #cde7fb 0%, #d8edfb 48%, #eaf7ff 100%);
+}
+
+.auth-canvas {
+  background:
+    radial-gradient(1000px 420px at 100% -10%, rgba(59, 130, 246, 0.08), transparent 72%),
+    radial-gradient(820px 320px at -10% 100%, rgba(110, 231, 183, 0.16), transparent 74%),
+    linear-gradient(180deg, #edf3fa 0%, #eef3f8 45%, #f5f9ff 100%);
+}
+
+.editorial-kicker {
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  font-weight: 700;
+}
+
+.cloud-outline {
+  position: absolute;
+  border: 1px solid rgba(224, 236, 246, 0.95);
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at 35% 35%, rgba(255, 255, 255, 0.95), rgba(244, 248, 252, 0.88) 70%, rgba(222, 232, 240, 0.75) 100%);
+  box-shadow: 0 10px 24px rgba(125, 154, 181, 0.22);
+  animation: drift 24s linear infinite;
+}
+
+.meadow-grass-horizon {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  height: 45vh;
+  min-height: 250px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(22, 85, 26, 0.2) 100%),
+    url("/images/landing/grass-field-real.jpg");
+  background-size: cover;
+  background-position: center 35%;
+  clip-path: polygon(0 24%, 100% 8%, 100% 100%, 0% 100%);
+}
+
+.meadow-grass-texture {
+  position: absolute;
+  inset-inline: -4%;
+  bottom: -2%;
+  height: 34vh;
+  min-height: 190px;
+  background:
+    linear-gradient(180deg, rgba(53, 143, 38, 0) 0%, rgba(53, 143, 38, 0.24) 58%, rgba(53, 143, 38, 0.52) 100%),
+    url("/images/landing/grass-texture-real.jpg");
+  background-size: cover;
+  background-position: center;
+  mix-blend-mode: multiply;
+  clip-path: polygon(0 32%, 100% 18%, 100% 100%, 0 100%);
+}
+
+.meadow-grass-highlight {
+  position: absolute;
+  inset-inline: -2%;
+  bottom: 8%;
+  height: 90px;
+  background:
+    radial-gradient(ellipse at 18% 50%, rgba(201, 255, 160, 0.42), rgba(201, 255, 160, 0) 62%),
+    radial-gradient(ellipse at 58% 52%, rgba(214, 255, 170, 0.35), rgba(214, 255, 170, 0) 64%),
+    radial-gradient(ellipse at 86% 54%, rgba(201, 255, 160, 0.42), rgba(201, 255, 160, 0) 62%);
+  pointer-events: none;
+}
+
+.meadow-flowers {
+  position: absolute;
+  bottom: 5%;
+  width: 96px;
+  height: 96px;
+  background:
+    radial-gradient(circle at 50% 38%, #ffd86a 0 11%, transparent 12%),
+    radial-gradient(circle at 28% 28%, #ffe899 0 11%, transparent 12%),
+    radial-gradient(circle at 72% 28%, #ffe899 0 11%, transparent 12%),
+    radial-gradient(circle at 28% 52%, #ffe899 0 11%, transparent 12%),
+    radial-gradient(circle at 72% 52%, #ffe899 0 11%, transparent 12%);
+  opacity: 0.65;
+}
+
+.meadow-flowers.left {
+  left: 12%;
+}
+
+.meadow-flowers.right {
+  right: 11%;
+}
+
+.stagger-rise {
+  opacity: 0;
+  animation: rise-in 520ms ease forwards;
+}
+
+.stagger-rise:nth-child(1) {
+  animation-delay: 90ms;
+}
+.stagger-rise:nth-child(2) {
+  animation-delay: 140ms;
+}
+.stagger-rise:nth-child(3) {
+  animation-delay: 190ms;
+}
+
+.floating-panel {
+  backdrop-filter: blur(4px);
+  box-shadow: 0 30px 65px rgba(15, 23, 42, 0.18);
+}
+
+@keyframes drift {
+  0% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(18px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes rise-in {
+  0% {
+    opacity: 0;
+    transform: translateY(16px) scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (max-width: 768px) {
+  .meadow-grass-horizon {
+    height: 38vh;
+    clip-path: polygon(0 30%, 100% 16%, 100% 100%, 0% 100%);
+  }
+
+  .meadow-grass-texture {
+    height: 30vh;
+  }
+
+  .meadow-flowers {
+    transform: scale(0.7);
+    opacity: 0.42;
+  }
+}
