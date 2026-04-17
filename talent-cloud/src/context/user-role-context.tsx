@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useMemo, useState } from "react";
+import { createContext, useCallback, useContext, useMemo, useState } from "react";
 import { userRoles } from "@/lib/constants";
 import { UserRole } from "@/lib/types";
 
@@ -10,10 +10,33 @@ type UserRoleContextValue = {
 };
 
 const UserRoleContext = createContext<UserRoleContextValue | undefined>(undefined);
+const ROLE_STORAGE_KEY = "boxin_user_role";
+const validRoles: UserRole[] = [
+  "unauthenticated",
+  "free_creator",
+  "paid_creator",
+  "brand_subscriber",
+  "admin",
+];
 
 export function UserRoleProvider({ children }: { children: React.ReactNode }) {
-  const [role, setRole] = useState<UserRole>(userRoles.UNAUTHENTICATED);
-  const value = useMemo(() => ({ role, setRole }), [role]);
+  const [role, setRoleState] = useState<UserRole>(() => {
+    if (typeof window === "undefined") {
+      return userRoles.UNAUTHENTICATED;
+    }
+    const savedRole = window.localStorage.getItem(ROLE_STORAGE_KEY);
+    if (savedRole && validRoles.includes(savedRole as UserRole)) {
+      return savedRole as UserRole;
+    }
+    return userRoles.UNAUTHENTICATED;
+  });
+
+  const setRole = useCallback((nextRole: UserRole) => {
+    setRoleState(nextRole);
+    window.localStorage.setItem(ROLE_STORAGE_KEY, nextRole);
+  }, []);
+
+  const value = useMemo(() => ({ role, setRole }), [role, setRole]);
   return <UserRoleContext.Provider value={value}>{children}</UserRoleContext.Provider>;
 }
 

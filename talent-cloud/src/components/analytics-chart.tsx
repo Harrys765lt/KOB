@@ -17,13 +17,13 @@ import {
 } from "recharts";
 import { analyticsData } from "@/lib/mock-data";
 
-const palette = ["#3B82F6", "#A78BFA", "#FCD34D", "#D6A77A"];
+const palette = ["#2F7F5F", "#5EA982", "#C9A84C", "#8BB7A1"];
 
 export function AnalyticsCharts() {
   return (
     <section className="card-surface space-y-6 p-5">
       <div className="flex items-start justify-between gap-4">
-        <p className="text-sm font-semibold tracking-wide">LOCKED SECTION FOR BRAND SUBS ONLY</p>
+        <p className="text-sm font-semibold tracking-wide">PERFORMANCE SNAPSHOT</p>
         <p className="text-xs text-[var(--text-secondary)]">data changes as post changes</p>
       </div>
       <h2 className="text-center text-4xl font-bold md:text-5xl">Data Don&apos;t Lie</h2>
@@ -55,8 +55,8 @@ export function AnalyticsCharts() {
                 <XAxis dataKey="year" />
                 <YAxis />
                 <Tooltip />
-                <Line type="monotone" dataKey="engagement" stroke="#3B82F6" strokeWidth={2} />
-                <Line type="monotone" dataKey="reach" stroke="#A78BFA" strokeWidth={2} />
+                <Line type="monotone" dataKey="engagement" stroke="#2F7F5F" strokeWidth={2} />
+                <Line type="monotone" dataKey="reach" stroke="#5EA982" strokeWidth={2} />
               </LineChart>
             </ResponsiveContainer>
           </div>
@@ -72,9 +72,9 @@ export function AnalyticsCharts() {
                 <YAxis />
                 <Tooltip />
                 <Legend />
-                <Bar dataKey="instagram" fill="#3B82F6" />
-                <Bar dataKey="tiktok" fill="#A78BFA" />
-                <Bar dataKey="youtube" fill="#FCD34D" />
+                <Bar dataKey="instagram" fill="#2F7F5F" />
+                <Bar dataKey="tiktok" fill="#5EA982" />
+                <Bar dataKey="youtube" fill="#C9A84C" />
               </BarChart>
             </ResponsiveContainer>
           </div>
@@ -90,9 +90,9 @@ export function AnalyticsCharts() {
                 <YAxis />
                 <Tooltip />
                 <Legend />
-                <Bar dataKey="instagram" stackId="a" fill="#3B82F6" />
-                <Bar dataKey="tiktok" stackId="a" fill="#A78BFA" />
-                <Bar dataKey="youtube" stackId="a" fill="#FCD34D" />
+                <Bar dataKey="instagram" stackId="a" fill="#2F7F5F" />
+                <Bar dataKey="tiktok" stackId="a" fill="#5EA982" />
+                <Bar dataKey="youtube" stackId="a" fill="#C9A84C" />
               </BarChart>
             </ResponsiveContainer>
           </div>

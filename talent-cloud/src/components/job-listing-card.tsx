@@ -17,8 +17,8 @@ export function JobListingCard({ job, accessTier, selected = false, onSelect }: 
       onClick={onSelect}
       className={`card-surface w-full overflow-hidden border-l-4 text-left transition duration-200 ${
         selected
-          ? "border-l-[var(--accent-blue)] shadow-[0_18px_36px_rgba(15,23,42,0.13)]"
-          : "border-l-[var(--accent-green)] hover:-translate-y-0.5 hover:shadow-[0_12px_28px_rgba(15,23,42,0.1)]"
+          ? "border-l-[var(--accent-blue)] shadow-[0_18px_36px_rgba(16,33,24,0.13)]"
+          : "border-l-[var(--accent-green)] hover:-translate-y-0.5 hover:shadow-[0_12px_28px_rgba(16,33,24,0.1)]"
       }`}
     >
       <div className="space-y-2 p-4">
@@ -30,9 +30,9 @@ export function JobListingCard({ job, accessTier, selected = false, onSelect }: 
           {locked ? "Sign up to read description." : job.description}
         </p>
         <div className="flex flex-wrap gap-2 text-xs">
-          <span className="rounded-full bg-slate-100 px-2 py-1">{job.niche}</span>
-          <span className="rounded-full bg-slate-100 px-2 py-1">{job.format}</span>
-          <span className="rounded-full bg-slate-100 px-2 py-1">{job.platform}</span>
+          <span className="rounded-full bg-[#eef4ef] px-2 py-1">{job.niche}</span>
+          <span className="rounded-full bg-[#eef4ef] px-2 py-1">{job.format}</span>
+          <span className="rounded-full bg-[#eef4ef] px-2 py-1">{job.platform}</span>
         </div>
         <p className="text-xs text-[var(--text-secondary)]">
           Rate:{" "}

@@ -2,21 +2,21 @@
 @import "tailwindcss";
 
 :root {
-  --bg-primary: #eef3f8;
+  --bg-primary: #eef4ef;
   --bg-card: #ffffff;
-  --text-primary: #0d1117;
-  --text-secondary: #6b7a8d;
-  --accent-blue: #3b82f6;
-  --accent-green: #22c55e;
+  --text-primary: #112018;
+  --text-secondary: #5f7166;
+  --accent-blue: #2f7f5f;
+  --accent-green: #5ea982;
   --niche-beauty: #f9a8d4;
   --niche-food: #fcd34d;
-  --niche-fashion: #a78bfa;
+  --niche-fashion: #9ca3ff;
   --niche-lifestyle: #6ee7b7;
-  --niche-tech: #93c5fd;
+  --niche-tech: #8ec5a6;
   --niche-travel: #fdb894;
-  --border: #e2e8f0;
-  --shadow: 0 16px 40px rgba(13, 17, 23, 0.08);
-  --shadow-soft: 0 10px 24px rgba(13, 17, 23, 0.05);
+  --border: #d8e4da;
+  --shadow: 0 16px 40px rgba(16, 33, 24, 0.08);
+  --shadow-soft: 0 10px 24px rgba(16, 33, 24, 0.05);
   --radius-card: 14px;
 }
 
@@ -65,9 +65,9 @@ h4 {
 
 .auth-canvas {
   background:
-    radial-gradient(1000px 420px at 100% -10%, rgba(59, 130, 246, 0.08), transparent 72%),
-    radial-gradient(820px 320px at -10% 100%, rgba(110, 231, 183, 0.16), transparent 74%),
-    linear-gradient(180deg, #edf3fa 0%, #eef3f8 45%, #f5f9ff 100%);
+    radial-gradient(1080px 460px at 100% -16%, rgba(47, 127, 95, 0.11), transparent 72%),
+    radial-gradient(860px 340px at -10% 100%, rgba(94, 169, 130, 0.16), transparent 74%),
+    linear-gradient(180deg, #edf4ef 0%, #edf4ee 46%, #f6faf7 100%);
 }
 
 .editorial-kicker {

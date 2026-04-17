@@ -17,10 +17,10 @@ export function JobDetailPanel({ job }: { job: JobListing }) {
           <p className="text-sm text-[var(--text-secondary)]">Brand Partnership Opportunity</p>
         </div>
         <div className="flex gap-2">
-          <button className="rounded-lg border border-[var(--border)] px-3 py-2 text-sm transition hover:bg-slate-50">
+          <button className="rounded-lg border border-[var(--border)] px-3 py-2 text-sm transition hover:bg-[#f2f7f3]">
             Track brand
           </button>
-          <button className="rounded-lg border border-[var(--border)] px-3 py-2 text-sm transition hover:bg-slate-50">
+          <button className="rounded-lg border border-[var(--border)] px-3 py-2 text-sm transition hover:bg-[#f2f7f3]">
             Share
           </button>
         </div>
@@ -37,8 +37,8 @@ export function JobDetailPanel({ job }: { job: JobListing }) {
             onClick={() => setTab(item.id as DetailTab)}
             className={`rounded-full px-3 py-1.5 text-sm transition ${
               tab === item.id
-                ? "bg-[var(--accent-blue)] text-white shadow-[0_10px_20px_rgba(59,130,246,0.25)]"
-                : "bg-slate-100 text-slate-700 hover:bg-slate-200"
+                ? "bg-[var(--accent-blue)] text-white shadow-[0_10px_20px_rgba(47,127,95,0.28)]"
+                : "bg-[#eef4ef] text-[#45574d] hover:bg-[#e2ece4]"
             }`}
           >
             {item.label}
@@ -60,7 +60,7 @@ export function JobDetailPanel({ job }: { job: JobListing }) {
             </article>
           </div>
           <div className="flex flex-wrap gap-2">
-            <button className="rounded-lg border border-[var(--border)] px-4 py-2 text-sm transition hover:bg-slate-50">
+            <button className="rounded-lg border border-[var(--border)] px-4 py-2 text-sm transition hover:bg-[#f2f7f3]">
               Go to Job Link
             </button>
             <button className="rounded-lg bg-[var(--accent-blue)] px-4 py-2 text-sm text-white transition hover:-translate-y-0.5 hover:brightness-105">
@@ -74,9 +74,9 @@ export function JobDetailPanel({ job }: { job: JobListing }) {
         <div className="space-y-3">
           <p className="text-2xl font-bold">4.2/5</p>
           <div className="grid gap-2 text-sm lg:grid-cols-3">
-            <p className="rounded-lg bg-slate-100 p-2">Payment Speed: 4.4</p>
-            <p className="rounded-lg bg-slate-100 p-2">Communication: 4.1</p>
-            <p className="rounded-lg bg-slate-100 p-2">Creative Freedom: 4.0</p>
+            <p className="rounded-lg bg-[#eef4ef] p-2">Payment Speed: 4.4</p>
+            <p className="rounded-lg bg-[#eef4ef] p-2">Communication: 4.1</p>
+            <p className="rounded-lg bg-[#eef4ef] p-2">Creative Freedom: 4.0</p>
           </div>
           {job.brandReviews.map((review) => (
             <article

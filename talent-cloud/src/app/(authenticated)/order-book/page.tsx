@@ -1,13 +1,27 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
 import { CreatorCard } from "@/components/creator-card";
+import { useUserRole } from "@/context/user-role-context";
 import { mockCreators } from "@/lib/mock-data";
 
 export default function OrderBookPage() {
+  const router = useRouter();
+  const { role } = useUserRole();
   const [search, setSearch] = useState("");
   const [niche, setNiche] = useState("All");
   const [verifiedOnly, setVerifiedOnly] = useState(false);
+
+  useEffect(() => {
+    if (role === "unauthenticated") {
+      router.replace("/login");
+      return;
+    }
+    if (role === "free_creator" || role === "paid_creator") {
+      router.replace("/talent-card");
+    }
+  }, [role, router]);
 
   const filtered = useMemo(() => {
     return mockCreators.filter((creator) => {
@@ -22,14 +36,17 @@ export default function OrderBookPage() {
     });
   }, [niche, search, verifiedOnly]);
 
+  if (role === "unauthenticated" || role === "free_creator" || role === "paid_creator") {
+    return null;
+  }
+
   return (
     <div className="space-y-5 p-1">
       <header className="flex flex-col gap-2">
-        <p className="editorial-kicker">Talent Cloud / Directory</p>
+        <p className="editorial-kicker">Brand Console / Directory</p>
         <h1 className="text-4xl font-bold md:text-5xl">Order Book</h1>
         <p className="max-w-2xl text-sm text-[var(--text-secondary)]">
-          Browse verified Malaysian creators with standardized credentials, niche-mapped profiles, and campaign-ready
-          portfolio context.
+          Browse talent panes and open full Talent Cards for campaign review, shortlist decisions, and brand outreach.
         </p>
       </header>
 
@@ -37,13 +54,13 @@ export default function OrderBookPage() {
         <input
           value={search}
           onChange={(event) => setSearch(event.target.value)}
-          placeholder="Search creators..."
-          className="rounded-lg border border-[var(--border)] bg-white px-3 py-2.5 outline-none transition focus:border-[var(--accent-blue)] focus:ring-2 focus:ring-blue-100"
+          placeholder="Search talent..."
+          className="rounded-lg border border-[var(--border)] bg-white px-3 py-2.5 outline-none transition focus:border-[var(--accent-blue)] focus:ring-2 focus:ring-[rgba(47,127,95,0.2)]"
         />
         <select
           value={niche}
           onChange={(event) => setNiche(event.target.value)}
-          className="rounded-lg border border-[var(--border)] bg-white px-3 py-2.5 outline-none transition focus:border-[var(--accent-blue)] focus:ring-2 focus:ring-blue-100"
+          className="rounded-lg border border-[var(--border)] bg-white px-3 py-2.5 outline-none transition focus:border-[var(--accent-blue)] focus:ring-2 focus:ring-[rgba(47,127,95,0.2)]"
         >
           <option>All</option>
           <option>Beauty</option>
