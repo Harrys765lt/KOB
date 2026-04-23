@@ -14,7 +14,7 @@ const creatorSlugByRole = {
 
 export default function TalentCardPage() {
   const router = useRouter();
-  const { role } = useUserRole();
+  const { role, isHydrated } = useUserRole();
 
   const creator = useMemo(() => {
     const preferredSlug = creatorSlugByRole[role as keyof typeof creatorSlugByRole] ?? mockCreators[0].slug;
@@ -22,6 +22,8 @@ export default function TalentCardPage() {
   }, [role]);
 
   useEffect(() => {
+    if (!isHydrated) return;
+
     if (role === "unauthenticated") {
       router.replace("/login");
       return;
@@ -29,15 +31,15 @@ export default function TalentCardPage() {
     if (role === "brand_subscriber") {
       router.replace("/order-book");
     }
-  }, [role, router]);
+  }, [isHydrated, role, router]);
 
-  if (role === "unauthenticated" || role === "brand_subscriber") {
+  if (!isHydrated || role === "unauthenticated" || role === "brand_subscriber") {
     return null;
   }
 
   return (
     <div className="-mt-4 lg:-mt-7">
-      <TalentCard creator={creator} viewer="creator" />
+      <TalentCard creator={creator} viewer="creator" isAdmin={role === "admin"} />
     </div>
   );
 }
