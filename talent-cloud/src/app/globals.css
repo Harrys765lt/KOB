@@ -171,6 +171,11 @@ h4 {
   box-shadow: 0 30px 65px rgba(15, 23, 42, 0.18);
 }
 
+.hero-media-scroll {
+  animation: hero-media-scroll 58s linear infinite;
+  will-change: transform;
+}
+
 @keyframes drift {
   0% {
     transform: translateX(0);
@@ -180,6 +185,15 @@ h4 {
   }
   100% {
     transform: translateX(0);
+  }
+}
+
+@keyframes hero-media-scroll {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-50%);
   }
 }
 
@@ -207,5 +221,11 @@ h4 {
   .meadow-flowers {
     transform: scale(0.7);
     opacity: 0.42;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-media-scroll {
+    animation: none;
   }
 }

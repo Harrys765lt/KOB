@@ -1,8 +1,10 @@
 "use client";
 
+import { FormEvent, useState } from "react";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { useUserRole } from "@/context/user-role-context";
+import type { AccountSession } from "@/lib/app-database";
 
 const roleRedirectMap: Record<string, string> = {
   brand: "/order-book",
@@ -10,12 +12,50 @@ const roleRedirectMap: Record<string, string> = {
   model: "/talent-card",
 };
 
+const roleLabelMap: Record<string, string> = {
+  creator: "Talent",
+};
+
 export default function OnboardingRolePage() {
   const params = useParams<{ role: string }>();
   const router = useRouter();
   const role = params.role?.toLowerCase() || "creator";
-  const roleLabel = role.charAt(0).toUpperCase() + role.slice(1);
-  const { setRole } = useUserRole();
+  const roleLabel = roleLabelMap[role] ?? role.charAt(0).toUpperCase() + role.slice(1);
+  const { setAccount } = useUserRole();
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setError("");
+
+    if (!name.trim() || !email.trim() || !password.trim()) {
+      setError("Name, email, and password are required.");
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    const response = await fetch("/api/onboarding", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name, email, password, onboardingRole: role }),
+    });
+    const result = (await response.json()) as { account?: AccountSession; error?: string };
+
+    setIsSubmitting(false);
+
+    if (!response.ok || !result.account) {
+      setError(result.error ?? "Could not create account.");
+      return;
+    }
+
+    setAccount(result.account);
+    router.push(roleRedirectMap[role] || "/talent-card");
+  };
 
   return (
     <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-[#111a12] px-4 py-10 text-[#f7f3ec]">
@@ -33,28 +73,34 @@ export default function OnboardingRolePage() {
         <p className="mb-5 text-center text-xs uppercase tracking-[0.18em] text-[rgba(201,168,76,0.75)]">
           Joining as {roleLabel}
         </p>
-        <div className="space-y-3">
+        <form className="space-y-3" onSubmit={onSubmit}>
           <input
+            value={name}
+            onChange={(event) => setName(event.target.value)}
             className="w-full rounded-xl border border-[rgba(201,168,76,0.28)] bg-[rgba(255,255,255,0.04)] px-3 py-2.5 text-sm text-[#f7f3ec] outline-none transition placeholder:text-[rgba(247,243,236,0.48)] focus:border-[var(--accent-blue)] focus:ring-2 focus:ring-[rgba(47,127,95,0.28)]"
             placeholder="Name"
           />
           <input
+            value={email}
+            onChange={(event) => setEmail(event.target.value)}
             className="w-full rounded-xl border border-[rgba(201,168,76,0.28)] bg-[rgba(255,255,255,0.04)] px-3 py-2.5 text-sm text-[#f7f3ec] outline-none transition placeholder:text-[rgba(247,243,236,0.48)] focus:border-[var(--accent-blue)] focus:ring-2 focus:ring-[rgba(47,127,95,0.28)]"
             placeholder="Email"
+            type="email"
           />
           <input
+            value={password}
+            onChange={(event) => setPassword(event.target.value)}
             className="w-full rounded-xl border border-[rgba(201,168,76,0.28)] bg-[rgba(255,255,255,0.04)] px-3 py-2.5 text-sm text-[#f7f3ec] outline-none transition placeholder:text-[rgba(247,243,236,0.48)] focus:border-[var(--accent-blue)] focus:ring-2 focus:ring-[rgba(47,127,95,0.28)]"
             placeholder="Password"
             type="password"
           />
+          {error ? <p className="text-sm text-[#f4b4b4]">{error}</p> : null}
           <button
-            onClick={() => {
-              setRole(role === "brand" ? "brand_subscriber" : "free_creator");
-              router.push(roleRedirectMap[role] || "/talent-card");
-            }}
+            type="submit"
+            disabled={isSubmitting}
             className="w-full rounded-xl bg-[var(--accent-blue)] px-4 py-2.5 font-semibold text-white transition hover:-translate-y-0.5 hover:brightness-105"
           >
-            Continue
+            {isSubmitting ? "Creating account..." : "Continue"}
           </button>
           <button className="w-full rounded-xl border border-[rgba(201,168,76,0.32)] bg-[rgba(201,168,76,0.08)] px-4 py-2.5 text-sm text-[#f7f3ec] transition hover:bg-[rgba(201,168,76,0.15)]">
             Continue with Google
@@ -65,7 +111,7 @@ export default function OnboardingRolePage() {
               Login
             </Link>
           </p>
-        </div>
+        </form>
       </div>
     </div>
   );

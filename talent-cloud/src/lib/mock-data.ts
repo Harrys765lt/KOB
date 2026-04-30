@@ -1,12 +1,12 @@
-import { Creator, JobListing } from "@/lib/types";
+import { Creator, JobListing, ProfileViewer, TalentMessage, TrackedJob } from "@/lib/types";
 
 export const mockCreators: Creator[] = [
   {
     id: "bxg-my-00001",
     credentialNumber: "BXG · MY · 00001",
-    name: "Naomi Tan",
-    handle: "@naomitan",
-    slug: "naomi-tan",
+    name: "EE-EAN",
+    handle: "@eeean",
+    slug: "ee-ean",
     niche: "Beauty",
     location: "KL",
     followers: 120000,
@@ -21,6 +21,18 @@ export const mockCreators: Creator[] = [
     brandsWorkedWith: ["Crocs", "G-Shock", "Rare Beauty", "Uniqlo", "GSC Movies"],
     audienceDemographics: { Chinese: 55, Malay: 25, Indian: 15, Japanese: 5 },
     languages: ["English", "Mandarin", "Bahasa Malaysia"],
+    ownerAccountId: "acct-ee-ean",
+    headshotImage: "/Model 1/model-headshot.png",
+    fullBodyImages: [
+      "/Model 1/model-fullbody1.png",
+      "/Model 1/model-fullbody2.png",
+      "/Model 1/model-fullbody3.png",
+      "/Model 1/model-fullbody4.png",
+    ],
+    cardPlaceholderImage: "/Model 1/1.png",
+    race: "Chinese",
+    gender: "Female",
+    modelingCapabilities: ["Commercial", "Runway", "Editorial"],
   },
   {
     id: "bxg-my-00002",
@@ -42,6 +54,9 @@ export const mockCreators: Creator[] = [
     brandsWorkedWith: ["GSC Movies", "Uniqlo"],
     audienceDemographics: { Chinese: 48, Malay: 31, Indian: 17, Japanese: 4 },
     languages: ["English", "Bahasa Malaysia"],
+    race: "Malay",
+    gender: "Female",
+    modelingCapabilities: ["Commercial", "Editorial"],
   },
   {
     id: "bxg-my-00003",
@@ -63,6 +78,9 @@ export const mockCreators: Creator[] = [
     brandsWorkedWith: ["Crocs", "Uniqlo"],
     audienceDemographics: { Chinese: 50, Malay: 30, Indian: 16, Japanese: 4 },
     languages: ["English", "Mandarin"],
+    race: "Chinese",
+    gender: "Male",
+    modelingCapabilities: ["Runway", "Editorial"],
   },
   {
     id: "bxg-my-00004",
@@ -84,6 +102,9 @@ export const mockCreators: Creator[] = [
     brandsWorkedWith: ["G-Shock"],
     audienceDemographics: { Chinese: 45, Malay: 37, Indian: 14, Japanese: 4 },
     languages: ["English", "Bahasa Malaysia"],
+    race: "Malay",
+    gender: "Female",
+    modelingCapabilities: ["Commercial"],
   },
   {
     id: "bxg-my-00005",
@@ -105,6 +126,9 @@ export const mockCreators: Creator[] = [
     brandsWorkedWith: ["G-Shock"],
     audienceDemographics: { Chinese: 52, Malay: 28, Indian: 16, Japanese: 4 },
     languages: ["English", "Mandarin"],
+    race: "Chinese",
+    gender: "Male",
+    modelingCapabilities: ["Commercial", "Runway"],
   },
   {
     id: "bxg-my-00006",
@@ -126,6 +150,9 @@ export const mockCreators: Creator[] = [
     brandsWorkedWith: ["GSC Movies"],
     audienceDemographics: { Chinese: 42, Malay: 40, Indian: 14, Japanese: 4 },
     languages: ["English", "Bahasa Malaysia"],
+    race: "Malay",
+    gender: "Female",
+    modelingCapabilities: ["Commercial", "Editorial"],
   },
 ];
 
@@ -133,9 +160,17 @@ export const mockJobs: JobListing[] = [
   {
     id: "job-001",
     brandName: "Luxe Skincare Co.",
-    contactPerson: { name: "Marcus Thorne", title: "HR Executive", photoUrl: "" },
+    contactPerson: {
+      name: "Marcus Thorne",
+      title: "HR Executive",
+      photoUrl: "/Model 1/office 6.jpg",
+      threadId: "thread-marcus",
+    },
+    companyIntro:
+      "Luxe Skincare Co. is a premium beauty label focused on science-backed nighttime routines and creator-led education for modern skincare buyers.",
     description:
       "Looking for high production video creators for a 3 month campaign focusing on nighttime routines.",
+    talentTypes: ["Model", "KOL", "Content Creator"],
     niche: "Beauty",
     format: "Long-Form",
     platform: "Instagram",
@@ -159,13 +194,50 @@ export const mockJobs: JobListing[] = [
       { title: "How strict is revision policy?", replies: 12 },
       { title: "Anyone done paid whitelisting with them?", replies: 7 },
     ],
+    similarJobs: [
+      {
+        id: "similar-luxe-001",
+        brandName: "Glow Lab MY",
+        description: "Serum launch seeking clean beauty creators for routine-led reels and stills.",
+        talentTypes: ["KOL", "Content Creator"],
+        platform: "Instagram",
+        rateRange: { min: 1200, max: 2600 },
+        matchScore: 84,
+      },
+      {
+        id: "similar-luxe-002",
+        brandName: "Nocturne Beauty",
+        description: "Night cream education campaign with product demo content and testimonial cuts.",
+        talentTypes: ["Model", "Content Creator"],
+        platform: "TikTok",
+        rateRange: { min: 1000, max: 2200 },
+        matchScore: 81,
+      },
+      {
+        id: "similar-luxe-003",
+        brandName: "Aster Apothecary",
+        description: "Premium skincare brand looking for polished GRWM content in bathroom settings.",
+        talentTypes: ["KOL", "Content Creator"],
+        platform: "Instagram",
+        rateRange: { min: 1800, max: 3500 },
+        matchScore: 79,
+      },
+    ],
   },
   {
     id: "job-002",
     brandName: "Urban Bite",
-    contactPerson: { name: "Alyssa Teh", title: "Marketing Lead", photoUrl: "" },
+    contactPerson: {
+      name: "Alyssa Teh",
+      title: "Marketing Lead",
+      photoUrl: "/Model 1/office 3.jpg",
+      threadId: "thread-alyssa",
+    },
+    companyIntro:
+      "Urban Bite operates fast-casual restaurants built around seasonal menus, local ingredients, and social-first launch campaigns across Malaysia.",
     description:
       "Seeking food creators for weekly short-form launches tied to seasonal menus.",
+    talentTypes: ["KOL", "Content Creator", "Food Reviewer"],
     niche: "Food",
     format: "Short-Form",
     platform: "TikTok",
@@ -180,13 +252,50 @@ export const mockJobs: JobListing[] = [
       },
     ],
     communityThreads: [{ title: "Best-performing deliverable format?", replies: 5 }],
+    similarJobs: [
+      {
+        id: "similar-urban-001",
+        brandName: "Kopitiam Lab",
+        description: "Cafe group needs food reviewers for new breakfast sets and creator taste tests.",
+        talentTypes: ["Food Reviewer", "Content Creator"],
+        platform: "TikTok",
+        rateRange: { min: 700, max: 1400 },
+        matchScore: 83,
+      },
+      {
+        id: "similar-urban-002",
+        brandName: "Sambal House",
+        description: "Weekly short-form series for spicy menu drops and casual dining reviews.",
+        talentTypes: ["KOL", "Food Reviewer"],
+        platform: "Instagram",
+        rateRange: { min: 900, max: 1700 },
+        matchScore: 78,
+      },
+      {
+        id: "similar-urban-003",
+        brandName: "Sweet Street",
+        description: "Dessert chain opening campaign seeking upbeat snack and lifestyle creators.",
+        talentTypes: ["KOL", "Content Creator"],
+        platform: "TikTok",
+        rateRange: { min: 850, max: 1600 },
+        matchScore: 76,
+      },
+    ],
   },
   {
     id: "job-003",
     brandName: "Threadline Studio",
-    contactPerson: { name: "Irfan Malik", title: "Partnership Manager", photoUrl: "" },
+    contactPerson: {
+      name: "Irfan Malik",
+      title: "Partnership Manager",
+      photoUrl: "/Model 1/office 8.jpg",
+      threadId: "thread-irfan",
+    },
+    companyIntro:
+      "Threadline Studio is a fashion house producing contemporary modestwear capsules, editorial lookbooks, and seasonal creator collaborations.",
     description:
       "Fashion lookbook campaign for Eid collections; request 2 reels and 8 story frames.",
+    talentTypes: ["Model", "KOL", "Content Creator"],
     niche: "Fashion",
     format: "Hybrid",
     platform: "Instagram",
@@ -201,6 +310,135 @@ export const mockJobs: JobListing[] = [
       },
     ],
     communityThreads: [{ title: "Any exclusivity clauses in contracts?", replies: 9 }],
+    similarJobs: [
+      {
+        id: "similar-threadline-001",
+        brandName: "Atelier Rumi",
+        description: "Editorial modestwear shoot needing models and creators for Eid styling reels.",
+        talentTypes: ["Model", "Content Creator"],
+        platform: "Instagram",
+        rateRange: { min: 1800, max: 3800 },
+        matchScore: 85,
+      },
+      {
+        id: "similar-threadline-002",
+        brandName: "Studio Hara",
+        description: "Lookbook collaboration with short runway clips, fit checks, and story frames.",
+        talentTypes: ["Model", "KOL"],
+        platform: "Instagram",
+        rateRange: { min: 2200, max: 4600 },
+        matchScore: 80,
+      },
+      {
+        id: "similar-threadline-003",
+        brandName: "The Linen Edit",
+        description: "Capsule collection launch seeking warm lifestyle styling content.",
+        talentTypes: ["KOL", "Content Creator"],
+        platform: "TikTok",
+        rateRange: { min: 1400, max: 3000 },
+        matchScore: 77,
+      },
+    ],
+  },
+];
+
+export const mockTrackedJobs: TrackedJob[] = [
+  {
+    jobId: "job-001",
+    status: "Pitch drafted",
+    nextStep: "Send rate card and availability",
+    updatedAt: "Today",
+  },
+  {
+    jobId: "job-003",
+    status: "Shortlisted",
+    nextStep: "Confirm lookbook deliverables",
+    updatedAt: "Yesterday",
+  },
+  {
+    jobId: "job-002",
+    status: "Saved",
+    nextStep: "Review community notes",
+    updatedAt: "2 days ago",
+  },
+];
+
+export const mockProfileViewers: ProfileViewer[] = [
+  {
+    id: "viewer-luxe",
+    name: "Luxe Skincare Co.",
+    title: "Brand team",
+    category: "Brands",
+    viewedAt: "18 min ago",
+  },
+  {
+    id: "viewer-marcus",
+    name: "Marcus Thorne",
+    title: "Recruiter",
+    category: "Recruiters",
+    viewedAt: "1 hr ago",
+  },
+  {
+    id: "viewer-kai",
+    name: "Kai Lim",
+    title: "Model",
+    category: "Models",
+    viewedAt: "3 hrs ago",
+  },
+  {
+    id: "viewer-aina",
+    name: "Aina Razak",
+    title: "Creator",
+    category: "Creators",
+    viewedAt: "Yesterday",
+  },
+  {
+    id: "viewer-irfan",
+    name: "Irfan Malik",
+    title: "Representative",
+    category: "Representatives",
+    viewedAt: "Yesterday",
+  },
+  {
+    id: "viewer-threadline",
+    name: "Threadline Studio",
+    title: "Brand team",
+    category: "Brands",
+    viewedAt: "2 days ago",
+  },
+  {
+    id: "viewer-yana",
+    name: "Yana Idris",
+    title: "Creator",
+    category: "Creators",
+    viewedAt: "2 days ago",
+  },
+];
+
+export const mockTalentMessages: TalentMessage[] = [
+  {
+    id: "msg-aina",
+    senderName: "Aina Razak",
+    senderTitle: "Food creator",
+    preview: "Want to swap rates for the Urban Bite shortlist?",
+    sentAt: "12:44 PM",
+    unreadCount: 2,
+  },
+  {
+    id: "msg-kai",
+    senderName: "Kai Lim",
+    senderTitle: "Fashion model",
+    preview: "I can introduce you to the stylist on Threadline.",
+    sentAt: "10:18 AM",
+    unreadCount: 0,
+  },
+  {
+    id: "msg-yana",
+    senderName: "Yana Idris",
+    senderTitle: "Lifestyle creator",
+    preview: "Shared the brief notes from last season in chat.",
+    sentAt: "Yesterday",
+    unreadCount: 1,
   },
 ];
 

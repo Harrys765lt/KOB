@@ -2,29 +2,32 @@
 
 import { useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { TalentCard } from "@/components/talent-card";
+import { ModelCard } from "@/components/model-card";
 import { useUserRole } from "@/context/user-role-context";
 import { mockCreators } from "@/lib/mock-data";
 
 export default function CreatorProfilePage() {
   const router = useRouter();
-  const { role } = useUserRole();
+  const { account, role, isHydrated } = useUserRole();
   const params = useParams<{ slug: string }>();
   const creator = mockCreators.find((item) => item.slug === params.slug) || mockCreators[0];
 
   useEffect(() => {
+    if (!isHydrated) return;
+
     if (role === "unauthenticated") {
       router.replace("/login");
       return;
     }
-    if (role === "free_creator" || role === "paid_creator") {
-      router.replace("/talent-card");
-    }
-  }, [role, router]);
+  }, [isHydrated, role, router]);
 
-  if (role === "unauthenticated" || role === "free_creator" || role === "paid_creator") {
+  if (!isHydrated || role === "unauthenticated") {
     return null;
   }
 
-  return <TalentCard creator={creator} viewer="brand" />;
+  const isOwner =
+    Boolean(account?.id && creator.ownerAccountId && account.id === creator.ownerAccountId) ||
+    Boolean(account?.creatorSlug && account.creatorSlug === creator.slug);
+
+  return <ModelCard creator={creator} viewer={isOwner ? "creator" : "brand"} />;
 }

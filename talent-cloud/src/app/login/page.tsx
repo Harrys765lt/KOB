@@ -4,46 +4,27 @@ import { FormEvent, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useUserRole } from "@/context/user-role-context";
+import type { AccountSession } from "@/lib/app-database";
 import { UserRole } from "@/lib/types";
-
-type DemoAccount = {
-  aliases: string[];
-  password: string;
-  role: UserRole;
-};
-
-const demoAccounts: DemoAccount[] = [
-  { aliases: ["admin123", "admin@boxin.my"], password: "admin123", role: "admin" },
-  { aliases: ["brand123", "brand@boxin.my"], password: "brand123", role: "brand_subscriber" },
-  { aliases: ["creator123", "creator@boxin.my"], password: "creator123", role: "free_creator" },
-];
 
 const roleRedirectMap: Record<UserRole, string> = {
   unauthenticated: "/login",
-  free_creator: "/talent-card",
-  paid_creator: "/talent-card",
-  brand_subscriber: "/order-book",
-  admin: "/order-book",
+  free_creator: "/home",
+  paid_creator: "/home",
+  brand_subscriber: "/home",
+  admin: "/home",
 };
-
-function resolveRole(identifier: string, password: string): UserRole | null {
-  const normalizedId = identifier.trim().toLowerCase();
-  const normalizedPassword = password.trim();
-  const account = demoAccounts.find(
-    (item) => item.aliases.includes(normalizedId) && item.password === normalizedPassword
-  );
-  return account ? account.role : null;
-}
 
 export default function LoginPage() {
   const router = useRouter();
-  const { setRole } = useUserRole();
+  const { setAccount } = useUserRole();
 
   const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const onSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setError("");
 
@@ -52,14 +33,24 @@ export default function LoginPage() {
       return;
     }
 
-    const resolvedRole = resolveRole(identifier, password);
-    if (!resolvedRole) {
-      setError("Invalid credentials. Try admin123 / admin123.");
+    setIsSubmitting(true);
+
+    const response = await fetch("/api/auth/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ identifier, password }),
+    });
+    const result = (await response.json()) as { account?: AccountSession; error?: string };
+
+    setIsSubmitting(false);
+
+    if (!response.ok || !result.account) {
+      setError(result.error ?? "Invalid credentials. Try admin123 / admin123.");
       return;
     }
 
-    setRole(resolvedRole);
-    router.replace(roleRedirectMap[resolvedRole]);
+    setAccount(result.account);
+    router.replace(roleRedirectMap[result.account.role]);
   };
 
   return (
@@ -94,9 +85,10 @@ export default function LoginPage() {
           {error ? <p className="text-sm text-[#f4b4b4]">{error}</p> : null}
           <button
             type="submit"
+            disabled={isSubmitting}
             className="w-full rounded-xl bg-[var(--accent-blue)] px-4 py-2.5 font-semibold text-white transition hover:-translate-y-0.5 hover:brightness-105"
           >
-            Login
+            {isSubmitting ? "Logging in..." : "Login"}
           </button>
           <button
             type="button"

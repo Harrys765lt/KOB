@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { NicheAccentBar } from "@/components/niche-accent-bar";
 import { VerifiedBadge } from "@/components/verified-badge";
 import { Creator } from "@/lib/types";
@@ -14,6 +15,8 @@ type CreatorCardProps = Pick<
   | "verified"
   | "slug"
   | "foundingMember"
+  | "headshotImage"
+  | "fullBodyImages"
 >;
 
 export function CreatorCard({
@@ -26,6 +29,8 @@ export function CreatorCard({
   verified,
   slug,
   foundingMember,
+  headshotImage,
+  fullBodyImages = [],
 }: CreatorCardProps) {
   return (
     <Link
@@ -35,14 +40,41 @@ export function CreatorCard({
       <NicheAccentBar niche={niche} />
       <div className="space-y-4 p-4">
         <p className="editorial-kicker">Talent Pane</p>
-        <div className="flex items-start justify-between gap-3">
-          <div className="h-20 w-20 rounded-xl bg-gradient-to-br from-[#cad7ce] via-[#e1e9e3] to-[#f4f8f5]" />
-          <div className="grid h-20 w-20 grid-cols-3 gap-1.5">
-            {Array.from({ length: 9 }).map((_, idx) => (
-              <div key={idx} className="rounded-[3px] bg-[#dde6df] transition group-hover:bg-[#c7d6cb]" />
-            ))}
+        <div className="relative">
+          <div className="flex h-[clamp(94px,7.5vw,126px)] w-full overflow-hidden rounded-xl bg-[#dde6df]">
+            <div className="relative aspect-square h-full shrink-0 overflow-hidden bg-gradient-to-br from-[#cad7ce] via-[#e1e9e3] to-[#f4f8f5]">
+              {headshotImage ? (
+                <Image
+                  src={headshotImage}
+                  alt={`${name} headshot`}
+                  fill
+                  sizes="126px"
+                  className="object-cover object-[50%_24%]"
+                />
+              ) : null}
+            </div>
+            {Array.from({ length: 4 }).map((_, idx) => {
+              const image = fullBodyImages[idx];
+
+              return (
+                <div
+                  key={`fullbody-${idx}`}
+                  className="relative aspect-[9/16] h-full min-w-0 flex-1 overflow-hidden bg-[#dde6df]"
+                >
+                  {image ? (
+                    <Image
+                      src={image}
+                      alt={`${name} full body ${idx + 1}`}
+                      fill
+                      sizes="64px"
+                      className="origin-top scale-[1.28] object-contain object-top"
+                    />
+                  ) : null}
+                </div>
+              );
+            })}
           </div>
-          {verified ? <VerifiedBadge /> : null}
+          {verified ? <div className="absolute right-2 top-2 z-10"><VerifiedBadge /></div> : null}
         </div>
         <div className="space-y-1.5 text-sm">
           <p className="text-[1.2rem] font-bold leading-tight">{name}</p>

@@ -10,12 +10,14 @@ import { AccessTier } from "@/lib/types";
 
 export default function JobSniperPage() {
   const router = useRouter();
-  const { role } = useUserRole();
+  const { role, isHydrated } = useUserRole();
   const [accessTier, setAccessTier] = useState<AccessTier>("free");
   const [selectedJobId, setSelectedJobId] = useState(mockJobs[0].id);
   const selectedJob = mockJobs.find((job) => job.id === selectedJobId) || mockJobs[0];
 
   useEffect(() => {
+    if (!isHydrated) return;
+
     if (role === "unauthenticated") {
       router.replace("/login");
       return;
@@ -23,9 +25,9 @@ export default function JobSniperPage() {
     if (role === "brand_subscriber") {
       router.replace("/order-book");
     }
-  }, [role, router]);
+  }, [isHydrated, role, router]);
 
-  if (role === "unauthenticated" || role === "brand_subscriber") {
+  if (!isHydrated || role === "unauthenticated" || role === "brand_subscriber") {
     return null;
   }
 

@@ -2,14 +2,14 @@
 
 import { useEffect, useMemo } from "react";
 import { useRouter } from "next/navigation";
-import { TalentCard } from "@/components/talent-card";
+import { ModelCard } from "@/components/model-card";
 import { useUserRole } from "@/context/user-role-context";
 import { mockCreators } from "@/lib/mock-data";
 
 const creatorSlugByRole = {
-  free_creator: "naomi-tan",
+  free_creator: "ee-ean",
   paid_creator: "kai-lim",
-  admin: "naomi-tan",
+  admin: "ee-ean",
 } as const;
 
 export default function TalentCardPage() {
@@ -39,7 +39,7 @@ export default function TalentCardPage() {
 
   return (
     <div className="-mt-4 lg:-mt-7">
-      <TalentCard creator={creator} viewer="creator" isAdmin={role === "admin"} />
+      <ModelCard creator={creator} viewer="creator" isAdmin={role === "admin"} />
     </div>
   );
 }

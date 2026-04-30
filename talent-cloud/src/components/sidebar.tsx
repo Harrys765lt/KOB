@@ -2,23 +2,29 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useUserRole } from "@/context/user-role-context";
 import { UserRole } from "@/lib/types";
 
 const creatorLinks = [
+  { href: "/home", label: "Home" },
   { href: "/talent-card", label: "Talent Card" },
   { href: "/job-sniper", label: "Job Sniper" },
-  { href: "/analytics", label: "Analytics" },
+  { href: "/messages", label: "Messages" },
 ];
 
-const brandLinks = [{ href: "/order-book", label: "Order Book" }];
+const brandLinks = [
+  { href: "/home", label: "Home" },
+  { href: "/order-book", label: "Order Book" },
+  { href: "/messages", label: "Messages" },
+];
 
 const adminLinks = [
+  { href: "/home", label: "Home" },
   { href: "/order-book", label: "Order Book" },
   { href: "/talent-card", label: "Talent Card" },
   { href: "/job-sniper", label: "Job Sniper" },
-  { href: "/analytics", label: "Analytics" },
+  { href: "/messages", label: "Messages" },
 ];
 
 const roleOptions: UserRole[] = [
@@ -40,11 +46,16 @@ function getShortLabel(label: string) {
 
 export function Sidebar() {
   const pathname = usePathname();
-  const { role, setRole } = useUserRole();
+  const router = useRouter();
+  const { account, role, setRole, clearAccount } = useUserRole();
   const [collapsed, setCollapsed] = useState(false);
 
   const links = role === "brand_subscriber" ? brandLinks : role === "admin" ? adminLinks : creatorLinks;
-  const homeHref = role === "brand_subscriber" ? "/order-book" : "/talent-card";
+  const homeHref = "/home";
+  const logout = () => {
+    clearAccount();
+    router.replace("/");
+  };
 
   return (
     <>
@@ -111,14 +122,24 @@ export function Sidebar() {
 
         <div className="mt-auto space-y-2">
           {collapsed ? (
-            <button
-              onClick={() => setCollapsed(false)}
-              className="w-full rounded-lg border border-[rgba(201,168,76,0.25)] bg-[rgba(201,168,76,0.08)] px-2 py-1.5 text-[10px] font-semibold uppercase tracking-[0.12em] text-[#e8c97e] transition hover:bg-[rgba(201,168,76,0.16)]"
-              aria-label="Expand sidebar"
-              title="Expand sidebar"
-            >
-              {">>"}
-            </button>
+            <>
+              <button
+                onClick={() => setCollapsed(false)}
+                className="w-full rounded-lg border border-[rgba(201,168,76,0.25)] bg-[rgba(201,168,76,0.08)] px-2 py-1.5 text-[10px] font-semibold uppercase tracking-[0.12em] text-[#e8c97e] transition hover:bg-[rgba(201,168,76,0.16)]"
+                aria-label="Expand sidebar"
+                title="Expand sidebar"
+              >
+                {">>"}
+              </button>
+              <button
+                type="button"
+                onClick={logout}
+                className="w-full rounded-lg border border-[rgba(244,180,180,0.28)] bg-[rgba(244,180,180,0.08)] px-2 py-1.5 text-[10px] font-semibold uppercase tracking-[0.12em] text-[#f4b4b4] transition hover:bg-[rgba(244,180,180,0.16)]"
+                title="Logout"
+              >
+                LO
+              </button>
+            </>
           ) : (
             <>
               <label className="text-xs uppercase tracking-wider text-slate-400">Demo role</label>
@@ -134,9 +155,16 @@ export function Sidebar() {
                 ))}
               </select>
               <div className="rounded-lg border border-white/20 bg-white/5 p-2.5">
-                <p className="text-sm font-semibold">Ava Lim</p>
-                <p className="text-xs text-slate-400">Account Settings</p>
+                <p className="text-sm font-semibold">{account?.name ?? "No Account"}</p>
+                <p className="text-xs text-slate-400">{account?.email ?? "Login required"}</p>
               </div>
+              <button
+                type="button"
+                onClick={logout}
+                className="w-full rounded-lg border border-[rgba(244,180,180,0.28)] bg-[rgba(244,180,180,0.08)] px-2 py-2 text-xs font-semibold uppercase tracking-[0.12em] text-[#f4b4b4] transition hover:bg-[rgba(244,180,180,0.16)]"
+              >
+                Logout
+              </button>
             </>
           )}
         </div>
@@ -158,6 +186,13 @@ export function Sidebar() {
             </Link>
           );
         })}
+        <button
+          type="button"
+          onClick={logout}
+          className="rounded-md px-2 py-1 text-xs font-semibold text-[#9b3d3d]"
+        >
+          Logout
+        </button>
       </nav>
     </>
   );
